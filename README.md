@@ -2,7 +2,7 @@
 
 Sebuah aplikasi berbasis web yang intuitif dan aman untuk mengelola keuangan pribadi Anda, membantu Anda melacak setiap rupiah, membuat anggaran, dan mencapai tujuan finansial.
 
-(public/foto/logo-finansa.png)
+![](public/foto/logo-finansa.png)
 ## ✨ Fitur Utama (Core Features)
 
 Aplikasi ini dirancang untuk memberikan kendali penuh atas uang Anda:
