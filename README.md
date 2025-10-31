@@ -2,7 +2,7 @@
 
 Sebuah aplikasi berbasis web yang intuitif dan aman untuk mengelola keuangan pribadi Anda, membantu Anda melacak setiap rupiah, membuat anggaran, dan mencapai tujuan finansial.
 
-![(foto/logo-finansa.png)]
+!(foto/logo-finansa.png)
 ## ✨ Fitur Utama (Core Features)
 
 Aplikasi ini dirancang untuk memberikan kendali penuh atas uang Anda:
@@ -46,4 +46,4 @@ Proyek ini dilisensikan di bawah Lisensi [Jenis Lisensi, contoh: MIT License]. L
 
 ## ✉️ Kontak
 
-[Idin_Naufal_Hakim] - [@nflhakim13_] - [idin.naufal.dev@gmail.com]
+Idin Naufal Hakim - @nflhakim13_ - [idin.naufal.dev@gmail.com]
