@@ -9,16 +9,6 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class TransaksiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    // public function index()
-    // {
-    //     // Ambil transaksi hanya milik user yang sedang login
-    //     $transaksi = Transaksi::where('user_id', Auth::id())->get();
-    //     return view('transaksi', compact('transaksi'));
-    // }
-
     public function index(Request $request)
     {
         $query = Transaksi::where('user_id', Auth::id());
@@ -58,17 +48,11 @@ class TransaksiController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         // Validasi input dari form
@@ -89,26 +73,17 @@ class TransaksiController extends Controller
         return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil ditambahkan!');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit($id)
     {
         $transaksi = Transaksi::findOrFail($id);
         return view('transaksi.edit', compact('transaksi'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
@@ -125,9 +100,6 @@ class TransaksiController extends Controller
         return redirect()->route('transaksi.index')->with('success', 'Transaksi berhasil diperbarui.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy($id)
     {
         $transaksi = Transaksi::findOrFail($id);

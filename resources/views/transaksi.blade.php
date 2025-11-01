@@ -115,12 +115,18 @@
                                                     data-keterangan="{{ $item->keterangan }}">
                                                     <i class="bi bi-pencil-square"></i>
                                                 </button>
-                                                <form action="{{ route('transaksi.destroy', $item->id_transaksi) }}"
-                                                    method="POST"
-                                                    onsubmit="return confirm('Yakin ingin menghapus transaksi ini?')">
+                                                <form id="delete-form-{{ $item->id_transaksi }}"
+                                                    action="{{ route('transaksi.destroy', $item->id_transaksi) }}" method="POST"
+                                                    style="display: inline;"> {{-- display inline agar tombol
+                                                    bersebelahan --}}
+
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger">
+
+                                                    <button type="button" class="btn btn-sm btn-danger delete-btn"
+                                                        data-id="{{ $item->id_transaksi }}"
+                                                        data-nama="{{ $item->nama_transaksi ?? 'Transaksi Ini' }}"> {{--
+                                                        Tambahkan data-id dan data-nama --}}
                                                         <i class="bi bi-trash"></i>
                                                     </button>
                                                 </form>
@@ -196,7 +202,6 @@
         </div>
     </div>
 </div>
-<!-- ================= End Modal ================= -->
 
 <!-- Modal Edit Transaksi -->
 <div class="modal fade" id="modalEdit" tabindex="-1" aria-labelledby="modalEditLabel" aria-hidden="true">
@@ -242,6 +247,58 @@
         </div>
     </div>
 </div>
+
+<!-- Script Sweet Alert -->
+@push('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+
+                    const itemId = this.getAttribute('data-id');
+                    const itemName = this.getAttribute('data-nama');
+                    const form = document.getElementById(`delete-form-${itemId}`);
+
+                    Swal.fire({
+                        title: 'Apakah Anda yakin?',
+                        text: `Anda akan menghapus transaksi ini`,
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        confirmButtonText: 'Ya, Hapus!',
+                        cancelButtonText: 'Batal'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit();
+                        }
+                    });
+                });
+            });
+
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Berhasil!',
+                    text: '{{ session('success') }}',
+                    showConfirmButton: false,
+                    timer: 2000
+                });
+            @endif
+
+            @if (session('error'))
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Gagal!',
+                    text: '{{ session('error') }}'
+                });
+            @endif
+        });
+    </script>
+@endpush
+
+<!-- Javascript Form Edit -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         const modalEdit = new bootstrap.Modal(document.getElementById('modalEdit'));
@@ -264,6 +321,8 @@
         });
     });
 </script>
+
+<!-- Data Tables -->
 <script src="DataTables/datatables.min.js"></script>
 <script>
     $(document).ready(function () {
