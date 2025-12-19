@@ -16,7 +16,7 @@
   {{-- Meta Tag CSRF untuk keamanan AJAX Laravel --}}
   <meta name="csrf-token" content="{{ csrf_token() }}">
   {{-- Area untuk CSS Tambahan (FullCalendar CSS akan masuk di sini) --}}
-    @stack('styles')
+  @stack('styles')
   <!--end::Primary Meta Tags-->
   <!--begin::Fonts-->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css"
@@ -231,7 +231,7 @@
           <img src="img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image opacity-75 shadow" />
           <!--end::Brand Image-->
           <!--begin::Brand Text-->
-          <span class="brand-text fw-light">AdminLTE 4</span>
+          <span class="brand-text fw-light">Finansa</span>
           <!--end::Brand Text-->
         </a>
         <!--end::Brand Link-->
@@ -261,6 +261,12 @@
               <a href="{{route('calendar.index')}}" class="nav-link">
                 <i class="nav-icon bi bi-calendar"></i>
                 <p>Kalender</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon bi bi-wallet"></i>
+                <p>Hutang</p>
               </a>
             </li>
             <!-- <li class="nav-item">
