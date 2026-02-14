@@ -258,13 +258,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{route('calendar.index')}}" class="nav-link">
+              <!-- <a href="{{route('calendar.index')}}" class="nav-link">
                 <i class="nav-icon bi bi-calendar"></i>
                 <p>Kalender</p>
-              </a>
+              </a> -->
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link">
+              <a href="{{route('hutang.index')}}" class="nav-link">
                 <i class="nav-icon bi bi-wallet"></i>
                 <p>Hutang</p>
               </a>

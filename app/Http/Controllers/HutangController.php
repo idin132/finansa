@@ -2,63 +2,87 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Hutang;
+use App\Models\HutangBayar;
 use Illuminate\Http\Request;
+use Auth;
 
 class HutangController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        // Mengambil data hutang beserta riwayat pembayarans untuk ditampilkan di modal
+        $hutang = Hutang::with('pembayarans')
+            ->where('user_id', Auth::id())
+            ->orderBy('tanggal_pinjam', 'desc')
+            ->get();
+
+        return view('hutang.index', compact('hutang'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'judul_hutang' => 'required',
+            'nilai_pokok' => 'required|numeric',
+            'tanggal_pinjam' => 'required|date',
+        ]);
+
+        Hutang::create([
+            'judul_hutang' => $request->judul_hutang,
+            'pihak_pemberi' => $request->pihak_pemberi,
+            'nilai_pokok' => $request->nilai_pokok,
+            'tanggal_pinjam' => $request->tanggal_pinjam,
+            'tanggal_tempo' => $request->tanggal_tempo,
+            'keterangan' => $request->keterangan,
+            'user_id' => Auth::id(),
+        ]);
+
+        return redirect()->back()->with('success', 'Data hutang berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $item = Hutang::with('pembayarans')->findOrFail($id);
+        return view('hutang.show', compact('item'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function storeBayar(Request $request, $id)
     {
-        //
+        HutangBayar::create([
+            'id_hutang' => $id,
+            'tanggal' => $request->tanggal,
+            'nominal' => $request->nominal,
+            'keterangan' => $request->keterangan,
+        ]);
+
+        return redirect()->back()->with('success', 'Pembayaran berhasil dicatat');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $hutang = Hutang::findOrFail($id);
+        $hutang->update($request->all());
+        return redirect()->back()->with('success', 'Data hutang berhasil diperbarui');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        Hutang::findOrFail($id)->delete();
+        return redirect()->route('hutang.index')->with('success', 'Data hutang berhasil dihapus');
+    }
+
+    // --- CRUD PEMBAYARAN (Hutang_Bayar) ---
+    public function updateBayar(Request $request, $id)
+    {
+        $bayar = HutangBayar::findOrFail($id);
+        $bayar->update($request->all());
+        return redirect()->back()->with('success', 'Riwayat pembayaran diperbarui');
+    }
+
+    public function destroyBayar($id)
+    {
+        HutangBayar::findOrFail($id)->delete();
+        return redirect()->back()->with('success', 'Riwayat pembayaran dihapus');
     }
 }
